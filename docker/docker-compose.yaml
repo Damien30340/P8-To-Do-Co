@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  db-mysql:
+    container_name: db-mysql
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: testserveur
+      MYSQL_DATABASE: testserveurweb
+      MYSQL_USER: test
+      MYSQL_PASSWORD: testpass
+    ports:
+      - "30916:3306"
