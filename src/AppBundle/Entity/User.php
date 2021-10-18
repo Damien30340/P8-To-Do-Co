@@ -41,7 +41,12 @@ class User implements UserInterface
     /**
      * @var array
      */
-    private $roles = ['ROLE_USER'];
+    private $roles = [];
+
+    public function __construct()
+    {
+        $this->setRoles(['ROLE_VIEWER']);
+    }
 
     public function getId()
     {
@@ -85,7 +90,11 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return $this->roles;
+        $roles = $this->roles;
+
+        $roles[] = 'ROLE_USER';
+
+        return $roles;
     }
 
     public function eraseCredentials()
