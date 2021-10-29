@@ -1,44 +1,39 @@
 {
     "name": "saro0h/to-do-list",
-    "license": "proprietary",
     "type": "project",
-    "autoload": {
-        "psr-4": {
-            "AppBundle\\": "src/AppBundle",
-            "App\\": "src/"
-        },
-        "classmap": [
-            "app/AppKernel.php",
-            "app/AppCache.php"
-        ]
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Tests\\AppBundle\\": "tests/AppBundle",
-            "App\\Tests\\": "tests/"
-        }
-    },
+    "license": "proprietary",
     "require": {
         "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "doctrine/doctrine-bundle": "^1.6",
-        "doctrine/orm": "^2.5",
-        "sensio/framework-extra-bundle": "^3.0.2",
+        "doctrine/doctrine-bundle": "^2.4",
+        "doctrine/doctrine-migrations-bundle": "^3.2",
+        "doctrine/orm": "^2.10",
+        "sensio/framework-extra-bundle": "^6.2",
+        "symfony/asset": "4.4.*",
+        "symfony/console": "4.4.*",
         "symfony/dotenv": "4.4.*",
         "symfony/flex": "^1.3.1",
         "symfony/form": "4.4.*",
-        "symfony/monolog-bundle": "^3.1",
-        "symfony/polyfill-apcu": "^1.0",
+        "symfony/framework-bundle": "4.4.*",
+        "symfony/monolog-bundle": "^3.7",
+        "symfony/polyfill-apcu": "^1.23",
+        "symfony/proxy-manager-bridge": "4.4.*",
+        "symfony/security-bundle": "4.4.*",
         "symfony/security-csrf": "4.4.*",
-        "symfony/swiftmailer-bundle": "^3.5.1",
         "symfony/translation": "4.4.*",
+        "symfony/twig-bundle": "4.4.*",
         "symfony/validator": "4.4.*",
         "symfony/yaml": "4.4.*"
     },
     "require-dev": {
-        "symfony/phpunit-bridge": "^5.2",
-        "dama/doctrine-test-bundle": "^4.0"
+        "dama/doctrine-test-bundle": "^6.6",
+        "symfony/browser-kit": "4.4.*",
+        "symfony/css-selector": "4.4.*",
+        "symfony/maker-bundle": "^1.34",
+        "symfony/stopwatch": "4.4.*",
+        "symfony/web-profiler-bundle": "4.4.*",
+        "symfony/phpunit-bridge": "^5.3"
     },
     "config": {
         "preferred-install": {
@@ -46,9 +41,29 @@
         },
         "sort-packages": true
     },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "App\\Tests\\": "tests/"
+        }
+    },
+    "replace": {
+        "paragonie/random_compat": "2.*",
+        "symfony/polyfill-ctype": "*",
+        "symfony/polyfill-iconv": "*",
+        "symfony/polyfill-php71": "*",
+        "symfony/polyfill-php70": "*",
+        "symfony/polyfill-php56": "*"
+    },
     "scripts": {
-        "auto-scripts": [
-        ],
+        "auto-scripts": {
+            "cache:clear": "symfony-cmd",
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
+        },
         "post-install-cmd": [
             "@auto-scripts"
         ],
