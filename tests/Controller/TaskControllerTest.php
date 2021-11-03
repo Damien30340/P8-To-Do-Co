@@ -37,20 +37,6 @@ class TaskControllerTest extends WebTestCase
         $client->submit($form);
         $crawler = $client->followRedirect();
 
-        $button = $crawler->selectLink('Créer une nouvelle tâche');
-        $client->click($button->link());
-
-        $this->assertSame(200, $client->getResponse()->getStatusCode());
-
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/login');
-        $form = $crawler->selectButton('Se connecter')->form([
-            '_username' => 'user',
-            '_password' => '123456'
-        ]);
-        $client->submit($form);
-        $crawler = $client->followRedirect();
-
         $button = $crawler->selectLink('Consulter la liste des tâches à faire');
         $client->click($button->link());
 
