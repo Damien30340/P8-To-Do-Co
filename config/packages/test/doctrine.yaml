@@ -1,4 +1,17 @@
 doctrine:
     dbal:
         # "TEST_TOKEN" is typically set by ParaTest
+        dbname: 'todoco_test'
+        host: 'localhost'
+        port: '30916'
+        user: 'root'
+        password: 'testserveur'
+        driver: 'pdo_mysql'
+        server_version: '5.7'
+        charset: utf8mb4
+        default_table_options:
+            charset: utf8mb4
+            collate: utf8mb4_unicode_ci
+
+        #url: '%env(resolve:DATABASE_URL)%'
 

@@ -2,16 +2,17 @@
 
 namespace App\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
 {
-    public function testIndexRedirectNoLogin()
+    public function testRedirectNoLogin(): void
     {
         $client = static::createClient();
         $client->request('GET', '/');
-        $this->assertSame(302, $client->getResponse()->getStatusCode());
+
+        $this->assertResponseRedirects('/login', 302);
 
         $crawler = $client->followRedirect();
         $this->assertSame(1, $crawler->filter('input[name="_username"]')->count());

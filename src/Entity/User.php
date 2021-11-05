@@ -3,15 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity("email")
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -23,28 +23,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     * @Assert\NotBlank(message="Vous devez saisir un nom d'utilisateur.")
+     * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank()
      */
     private $username;
-
-    /**
-     * @ORM\Column(type="string", length=60, unique=true)
-     * @Assert\Email(message="Le format de l'adresse n'est pas correcte.")
-     * @Assert\NotBlank(message="Vous devez saisir une adresse email.")
-     */
-    private $email;
-
-    /**
-     * @var string The hashed password
-     * @ORM\Column(type="string", length=255)
-     */
-    private $password;
 
     /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
+
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\Email()
+     */
+    private string $email;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Task::class, mappedBy="user")
+     */
+    private $tasks;
+
+
+
+    public function __construct()
+    {
+        $this->tasks = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -64,11 +75,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->username;
+    }
+
+    public function setUsername(string $username): self
+    {
+        $this->username = $username;
+
+        return $this;
+    }
+
+    /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
      */
-    public function getUsername(): string
+    public function getUserIdentifier(): string
     {
         return (string) $this->username;
     }
@@ -93,7 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @see UserInterface
+     * @see PasswordAuthenticatedUserInterface
      */
     public function getPassword(): string
     {
@@ -127,18 +153,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function setUsername(string $username): self
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTasks(): Collection
     {
-        $this->username = $username;
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setUser($this);
+        }
 
         return $this;
     }
 
-    /**
-     * @see UserInterface
-     */
-    public function getUserIdentifier(): string
+    public function removeTask(Task $task): self
     {
-        return $this->username;
+        if ($this->tasks->removeElement($task)) {
+            // set the owning side to null (unless already changed)
+            if ($task->getUser() === $this) {
+                $task->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

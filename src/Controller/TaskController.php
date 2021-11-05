@@ -4,14 +4,15 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Form\TaskType;
-use App\Repository\TaskRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\EntityPersister;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 class TaskController extends AbstractController
 {
+
     /**
      * @Route("/tasks", name="task_list")
      */
@@ -23,18 +24,14 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/create", name="task_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, EntityPersister $entityPersister)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $em->persist($task);
-            $em->flush();
+            $task->setUser($this->getUser());
+            $entityPersister->update($task);
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
@@ -47,15 +44,14 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
      */
-    public function editAction(TaskRepository $taskRepository, Request $request, EntityManagerInterface $entityManager)
+    public function editAction(Task $task, Request $request, EntityPersister $entityPersister)
     {
-        $task = $taskRepository->findOneBy(['id' => $request->get('id')]);
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $entityPersister->update($task);
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
@@ -71,10 +67,10 @@ class TaskController extends AbstractController
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
      */
-    public function toggleTaskAction(Task $task)
+    public function toggleTaskAction(Task $task, EntityPersister $entityPersister)
     {
         $task->toggle(!$task->isDone());
-        $this->getDoctrine()->getManager()->flush();
+        $entityPersister->update($task);
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
@@ -83,15 +79,14 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
+     * @IsGranted("TASK_DELETE", subject="task", message="No access! Get out!")
      */
-    public function deleteTaskAction(Task $task)
+    public function deleteTaskAction(Task $task, EntityPersister $entityPersister)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->remove($task);
-        $em->flush();
+        $entityPersister->delete($task);
 
         $this->addFlash('success', 'La tâche a bien été supprimée.');
-
+//
         return $this->redirectToRoute('task_list');
     }
 }
