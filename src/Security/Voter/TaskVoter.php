@@ -26,29 +26,11 @@ class TaskVoter extends Voter
         if (!$user instanceof UserInterface) {
             return false;
         }
-        if($attribute === self::TASK_DELETE){
-            if($this->canRemove($subject, $user) === true){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private function canRemove(Task $task, UserInterface $user): bool
-    {
-        if ($task->getUser() === null) {
-            if(in_array('ROLE_ADMIN', $user->getRoles())){
-                return true;
-            }
-            else{
-                return false;
-            }
-        }
-
-        if ($task->getUser() === $user)
-        {
+        if ($subject->getUser() === $user) {
             return true;
-        } else{
+        } elseif ($subject->getUser() === null & in_array('ROLE_ADMIN', $user->getRoles())){
+            return true;
+        } else {
             return false;
         }
     }
