@@ -9,32 +9,28 @@ class UserTest extends KernelTestCase
 {
     use HasErrorsTrait;
 
-    /**
-     * @return User
-     */
-    public function getEntity(){
-        $user = new User();
-        $user->setUsername('test');
-        $user->setPassword('test');
-        $user->setEmail('test@gmail.com');
-
-        return $user;
+    public function getEntity(): User
+    {
+        return (new User())
+            ->setUsername('test')
+            ->setPassword('test')
+            ->setEmail('test@gmail.com');
     }
 
-    public function testValidUserEntity()
+    public function testValidUserEntity(): void
     {
         $this->assertHasErrors($this->getEntity(), 0);
     }
 
-    public function testInvalidBlankUsername()
+    public function testInvalidBlankUsername(): void
     {
         $user = new User();
         $user->setUsername('');
-        $user->setEmail("test@test.com");
+        $user->setEmail('test@test.com');
         $this->assertHasErrors($user, 1);
     }
 
-    public function testInvalidFormatEmail()
+    public function testInvalidFormatEmail(): void
     {
         $user = new User();
         $user->setUsername('Toto');
@@ -42,16 +38,14 @@ class UserTest extends KernelTestCase
         $this->assertHasErrors($user, 1);
     }
 
-
-    public function testDefaultUserRole()
+    public function testDefaultUserRole(): void
     {
         $this->assertSame(['ROLE_USER'], $this->getEntity()->getRoles());
     }
 
-    public function testGetIdUser()
+    public function testGetIdUser(): void
     {
         $user = new User();
         $this->assertEquals(null, $user->getId());
     }
-
 }

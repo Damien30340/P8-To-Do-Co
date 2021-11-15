@@ -9,10 +9,8 @@ class TaskTest extends KernelTestCase
 {
     use HasErrorsTrait;
 
-    /**
-     * @return Task
-     */
-    public function getEntity(){
+    public function getEntity(): Task
+    {
         $task = new Task();
         $task->setTitle('titleTest');
         $task->setContent('contentTest');
@@ -21,41 +19,44 @@ class TaskTest extends KernelTestCase
         return $task;
     }
 
-    public function testValidTaskEntity(){
+    public function testValidTaskEntity(): void
+    {
         $this->assertHasErrors($this->getEntity(), 0);
     }
 
-    public function testInvalidBlankTitle(){
+    public function testInvalidBlankTitle(): void
+    {
         $task = new Task();
         $task->setContent('Test');
         $this->assertHasErrors($task, 1);
     }
 
-    public function testInvalidBlankContent(){
+    public function testInvalidBlankContent(): void
+    {
         $task = new Task();
         $task->setTitle('Test');
         $this->assertHasErrors($task, 1);
     }
 
-    public function testGetIdTask()
+    public function testGetIdTask(): void
     {
         $task = new Task();
         $this->assertSame(null, $task->getId());
     }
 
-    public function testCreatedDateTask()
+    public function testCreatedDateTask(): void
     {
         $task = new Task();
         $this->assertInstanceOf(\DateTime::class, $task->getCreatedAt());
     }
 
-    public function testIsDoneDefaultTask()
+    public function testIsDoneDefaultTask(): void
     {
         $task = new Task();
         $this->assertSame(false, $task->isDone());
     }
 
-    public function testIsDoneAfterToggleTask()
+    public function testIsDoneAfterToggleTask(): void
     {
         $task = new Task();
         $task->toggle(true);

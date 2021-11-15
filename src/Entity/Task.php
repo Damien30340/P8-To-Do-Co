@@ -8,6 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TaskRepository::class)
+ * @ORM\Table(name="task")
  */
 class Task
 {
@@ -16,34 +17,29 @@ class Task
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
-
+    private ?int $id = null;
     /**
      * @ORM\Column(type="datetime")
      */
-    private $createdAt;
-
+    private \DateTimeInterface $createdAt;
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank()
      */
-    private $title;
-
+    private string $title;
     /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
-    private $content;
-
+    private string $content;
     /**
      * @ORM\Column(type="boolean")
      */
-    private $isDone;
-
+    private bool $isDone;
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="tasks")
      */
-    private $user;
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -68,7 +64,7 @@ class Task
         return $this;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -80,7 +76,7 @@ class Task
         return $this;
     }
 
-    public function getContent(): ?string
+    public function getContent(): string
     {
         return $this->content;
     }
@@ -92,12 +88,12 @@ class Task
         return $this;
     }
 
-    public function isDone():bool
+    public function isDone(): bool
     {
         return $this->isDone;
     }
 
-    public function toggle($flag)
+    public function toggle(bool $flag): void
     {
         $this->isDone = $flag;
     }
