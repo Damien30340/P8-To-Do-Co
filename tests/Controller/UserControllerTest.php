@@ -2,7 +2,6 @@
 
 namespace App\Tests\Controller;
 
-
 use App\Entity\Task;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -11,36 +10,37 @@ class UserControllerTest extends WebTestCase
     use ProvidePathsTrait;
     use NeedLoginTrait;
 
-    public function testAccessListUsersUnauthorize()
+    private const MAIN_FIREWALL = 'main';
+
+    public function testAccessListUsersUnauthorize(): void
     {
         $client = self::createClient();
-        self::loginUser($client);
+        $client->loginUser($this->hydrateUser($client), self::MAIN_FIREWALL);
 
         $client->request('GET', '/admin/users');
         $this->assertSame(403, $client->getResponse()->getStatusCode());
     }
 
     /**
-     * @param string $path
      * @dataProvider provideUserPaths
      */
-    public function testAccessAnonymeUnauthorize(string $path)
+    public function testAccessAnonymeUnauthorize(string $path): void
     {
         $client = self::createClient();
         $client->request('GET', $path);
         $this->assertResponseStatusCodeSame(302);
     }
 
-    public function testListUsersAdmin()
+    public function testListUsersAdmin(): void
     {
         $client = self::createClient();
-        self::loginAdmin($client);
+        $client->loginUser($this->hydrateAdmin($client), self::MAIN_FIREWALL);
 
         $client->request('GET', '/admin/users');
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 
-    public function testCreateUser()
+    public function testCreateUser(): void
     {
         $client = self::createClient();
         $client->request('GET', '/users/create');
@@ -50,7 +50,7 @@ class UserControllerTest extends WebTestCase
             'user[username]' => 'newUser',
             'user[password][first]' => 'new123456',
             'user[password][second]' => 'new123456',
-            'user[email]' => 'newEmail@email.com'
+            'user[email]' => 'newEmail@email.com',
         ]);
 
         $this->assertResponseStatusCodeSame(302);
@@ -59,17 +59,17 @@ class UserControllerTest extends WebTestCase
         $this->assertRouteSame('homepage');
     }
 
-    public function testEditUser()
+    public function testEditUser(): void
     {
         $client = self::createClient();
-        self::loginUser($client);
+        $client->loginUser($this->hydrateUser($client), self::MAIN_FIREWALL);
         $client->request('GET', '/users/1/edit');
 
         $client->submitForm('Modifier', [
             'user[username]' => 'editUser',
             'user[password][first]' => 'editPassword',
             'user[password][second]' => 'editPassword',
-            'user[email]' => 'editEmail@email.com'
+            'user[email]' => 'editEmail@email.com',
         ]);
 
         $this->assertResponseStatusCodeSame(302);
@@ -77,14 +77,16 @@ class UserControllerTest extends WebTestCase
         $this->assertRouteSame('homepage');
     }
 
-    public function testViewTasksUser(){
+    public function testViewTasksUser(): void
+    {
         $client = self::createClient();
         $user = self::session($client);
 
         $this->assertInstanceOf(Task::class, $user->getTasks()->first());
     }
 
-    public function testDeleteTasksUser(){
+    public function testDeleteTasksUser(): void
+    {
         $client = self::createClient();
         $user = self::session($client);
 
@@ -93,7 +95,8 @@ class UserControllerTest extends WebTestCase
         $this->assertNotEquals($count, $user->getTasks()->count());
     }
 
-    public function testAddTasksUser(){
+    public function testAddTasksUser(): void
+    {
         $client = self::createClient();
         $user = self::session($client);
 

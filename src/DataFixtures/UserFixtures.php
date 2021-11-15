@@ -12,7 +12,6 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
  */
 class UserFixtures extends Fixture
 {
-
     private UserPasswordHasherInterface $hasher;
 
     public function __construct(UserPasswordHasherInterface $hasher)
@@ -22,15 +21,15 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        for($i = 1; $i <= 3; $i++){
+        for ($i = 1; $i <= 3; ++$i) {
             $user = (new User())
-                ->setUsername('user' .$i)
-                ->setEmail('user' . $i . '@test.fr');
+                ->setUsername('user'.$i)
+                ->setEmail('user'.$i.'@test.fr');
             $pass = $this->hasher->hashPassword($user, '123456');
             $user->setPassword($pass);
             $manager->persist($user);
 
-            $this->addReference('user_' .$i, $user);
+            $this->addReference('user_'.$i, $user);
         }
         $manager->flush();
 

@@ -9,16 +9,22 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TaskVoter extends Voter
 {
-    const TASK_DELETE = 'TASK_DELETE';
+    public const TASK_DELETE = 'TASK_DELETE';
 
+    /**
+     * @param Task|null $subject
+     */
     protected function supports(string $attribute, $subject): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
-        return $attribute == self::TASK_DELETE
+        return self::TASK_DELETE === $attribute
             && $subject instanceof Task;
     }
 
+    /**
+     * @param Task|null $subject
+     */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
@@ -26,13 +32,7 @@ class TaskVoter extends Voter
         if (!$user instanceof UserInterface) {
             return false;
         }
-        if ($subject->getUser() === $user) {
-            return true;
-        } elseif ($subject->getUser() === null & in_array('ROLE_ADMIN', $user->getRoles())){
-            return true;
-        } else {
-            return false;
-        }
-    }
 
+        return $subject->getUser() === $user || null === $subject->getUser() & in_array('ROLE_ADMIN', $user->getRoles());
+    }
 }

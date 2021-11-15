@@ -2,11 +2,14 @@
 
 namespace App\Tests\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 
 trait NeedLoginTrait
 {
-    private static function session($client){
+    private static function session(KernelBrowser $client): User
+    {
         $userRepository = $client->getContainer()->get(UserRepository::class);
         $user = $userRepository->findOneBy(['id' => 1]);
         $client->loginUser($user, 'main');
@@ -14,15 +17,17 @@ trait NeedLoginTrait
         return $user;
     }
 
-    private static function loginUser($client){
+    private static function hydrateUser(KernelBrowser $client): User
+    {
         $userRepository = $client->getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy(['id' => 1]);
-        $client->loginUser($user, 'main');
+
+        return $userRepository->findOneBy(['id' => 1]);
     }
 
-    private static function loginAdmin($client){
+    private static function hydrateAdmin(KernelBrowser $client): User
+    {
         $userRepository = $client->getContainer()->get(UserRepository::class);
-        $user = $userRepository->findOneBy(['id' => 4]);
-        $client->loginUser($user, 'main');
+
+        return $userRepository->findOneBy(['id' => 4]);
     }
 }

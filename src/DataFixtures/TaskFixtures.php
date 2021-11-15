@@ -12,7 +12,6 @@ use Doctrine\Persistence\ObjectManager;
  */
 class TaskFixtures extends Fixture implements DependentFixtureInterface
 {
-
     public function load(ObjectManager $manager): void
     {
         $task = (new Task())
@@ -22,32 +21,30 @@ class TaskFixtures extends Fixture implements DependentFixtureInterface
         $manager->persist($task);
         $manager->flush();
 
-        for($i = 2; $i <= 5; $i++){
+        for ($i = 2; $i <= 5; ++$i) {
             $rand = random_int(1, 3);
 
             $task = (new Task())
-                ->setTitle('testTitle' .$i)
-                ->setContent('testContent' .$i)
-                ->setUser($this->getReference('user_' .$rand));
+                ->setTitle('testTitle'.$i)
+                ->setContent('testContent'.$i)
+                ->setUser($this->getReference('user_'.$rand));
             $manager->persist($task);
         }
         $manager->flush();
 
-        for($i = 6; $i <= 9; $i++){
-
-        $task = (new Task())
-            ->setTitle('testTitle' .$i)
-            ->setContent('testContent' .$i);
-        $manager->persist($task);
+        for ($i = 6; $i <= 9; ++$i) {
+            $task = (new Task())
+            ->setTitle('testTitle'.$i)
+            ->setContent('testContent'.$i);
+            $manager->persist($task);
         }
         $manager->flush();
     }
 
-
     public function getDependencies()
     {
         return [
-            UserFixtures::class
+            UserFixtures::class,
         ];
     }
 }

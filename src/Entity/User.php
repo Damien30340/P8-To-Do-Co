@@ -21,37 +21,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
-
+    private ?int $id = null;
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank()
      */
-    private $username;
-
+    private string $username;
     /**
      * @ORM\Column(type="json")
+     * @var array<string>
      */
-    private $roles = [];
-
+    private iterable $roles = [];
     /**
-     * @var string The hashed password
      * @ORM\Column(type="string")
      */
-    private $password;
-
+    private string $password;
     /**
      * @ORM\Column(type="string", length=255, unique=true)
      * @Assert\Email()
      */
     private string $email;
-
     /**
      * @ORM\OneToMany(targetEntity=Task::class, mappedBy="user")
+     *
+     * @var Collection<int, Task>
      */
-    private $tasks;
-
-
+    private Collection $tasks;
 
     public function __construct()
     {
@@ -80,7 +75,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return $this->username;
     }
 
     public function setUsername(string $username): self
@@ -97,11 +92,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getUserIdentifier(): string
     {
-        return (string) $this->username;
+        return $this->username;
     }
 
     /**
      * @see UserInterface
+     * @return array<string>
      */
     public function getRoles(): array
     {
@@ -111,7 +107,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return array_unique($roles);
     }
-
+    /**
+     * @param array<string> $roles
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -149,14 +148,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @see UserInterface
      * @codeCoverageIgnore
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
 
     /**
-     * @return Collection|Task[]
+     * @return Collection<int, Task>
      */
     public function getTasks(): Collection
     {

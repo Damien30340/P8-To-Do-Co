@@ -6,14 +6,15 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SecurityControllerTest extends WebTestCase
 {
-    public function testLogin(){
-        $client = static::createClient();    
+    public function testLogin(): void
+    {
+        $client = static::createClient();
         $client->request('GET', '/login');
         $this->assertResponseIsSuccessful();
 
         $client->submitForm('Se connecter', [
             '_username' => 'user1',
-            '_password' => '123456'
+            '_password' => '123456',
         ]);
 
         $this->assertResponseStatusCodeSame(302);
@@ -21,7 +22,7 @@ class SecurityControllerTest extends WebTestCase
         $this->assertRouteSame('homepage');
     }
 
-    public function testLoginInvalidCredentials()
+    public function testLoginInvalidCredentials(): void
     {
         $client = static::createClient();
         $client->request('GET', '/login');
@@ -29,13 +30,13 @@ class SecurityControllerTest extends WebTestCase
 
         $client->submitForm('Se connecter', [
             '_username' => 'fakeUser',
-            '_password' => 'fakePassword'
+            '_password' => 'fakePassword',
         ]);
 
         $this->assertResponseStatusCodeSame(302);
         $crawler = $client->followRedirect();
         $this->assertSame(
-            "Invalid credentials.",
+            'Invalid credentials.',
             $crawler->filter('.alert.alert-danger')->text()
         );
     }
