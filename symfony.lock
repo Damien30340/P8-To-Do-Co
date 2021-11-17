@@ -169,6 +169,9 @@
     "nunomaduro/phpinsights": {
         "version": "v2.0.1"
     },
+    "pdepend/pdepend": {
+        "version": "2.10.1"
+    },
     "phar-io/manifest": {
         "version": "2.0.3"
     },
@@ -192,6 +195,9 @@
     },
     "phploc/phploc": {
         "version": "7.0.2"
+    },
+    "phpmd/phpmd": {
+        "version": "2.10.2"
     },
     "phpspec/prophecy": {
         "version": "1.14.0"
@@ -290,6 +296,9 @@
     },
     "sebastian/object-reflector": {
         "version": "2.0.4"
+    },
+    "sebastian/phpcpd": {
+        "version": "6.0.3"
     },
     "sebastian/recursion-context": {
         "version": "4.0.4"
