@@ -49,8 +49,10 @@
         "dama/doctrine-test-bundle": "^6.6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "nunomaduro/phpinsights": "^2.0",
+        "phpmd/phpmd": "^2.10",
         "phpstan/phpstan-symfony": "^1.0",
         "phpunit/phpunit": "^9.5",
+        "sebastian/phpcpd": "^6.0",
         "symfony/browser-kit": "5.3.*",
         "symfony/css-selector": "5.3.*",
         "symfony/debug-bundle": "5.3.*",
@@ -128,6 +130,12 @@
         ],
         "phpinsights": [
             ".\\vendor\\bin\\phpinsights"
+        ],
+        "phpcpd": [
+            ".\\vendor\\bin\\phpcpd src/"
+        ],
+        "phpmd": [
+            ".\\vendor\\bin\\phpmd src/ text .phpmd.xml"
         ]
     },
     "conflict": {
