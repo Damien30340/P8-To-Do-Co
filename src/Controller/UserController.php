@@ -13,6 +13,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/users")
+ */
 class UserController extends AbstractController
 {
     private EntityPersister $entityPersister;
@@ -22,7 +25,7 @@ class UserController extends AbstractController
         $this->entityPersister = $entityPersister;
     }
     /**
-     * @Route("/admin/users", name="user_list")
+     * @Route("/list", name="user_list")
      * @IsGranted("ROLE_ADMIN", message="No access! Get out!")
      */
     public function listAction(UserRepository $userRepository): Response
@@ -31,7 +34,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/create", name="user_create")
+     * @Route("/create", name="user_create")
      */
     public function createAction(Request $request, UserPasswordHasherInterface $hasher): Response
     {
@@ -51,7 +54,7 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route("/users/{id}/edit", name="user_edit")
+     * @Route("/{id}/edit", name="user_edit")
      */
     public function editAction(User $user, Request $request, UserPasswordHasherInterface $hasher): Response
     {
