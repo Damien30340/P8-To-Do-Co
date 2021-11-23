@@ -5,9 +5,9 @@ services:
     image: mysql:5.7
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: testserveur
-      MYSQL_DATABASE: testserveurweb
-      MYSQL_USER: test
-      MYSQL_PASSWORD: testpass
+      MYSQL_ROOT_PASSWORD: your_password_root
+      MYSQL_DATABASE: your_database
+      MYSQL_USER: your_user
+      MYSQL_PASSWORD: your_password
     ports:
       - "30916:3306"
