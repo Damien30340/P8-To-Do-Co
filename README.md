@@ -14,8 +14,10 @@ https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
 ## Install
 * Step 1: Move to the installation folder, make a `git clone` followed by `https://github.com/Damien30340/P8-ToDo-Co.git`
 * Step 2: Configure your environment variables `.env.local` => `env` = `dev`
+* Step 3: Configure your database and update your `.env.local` and `.env.test`
 * Step 3: Make a `composer install` in command line
 * Step 4: Make a `composer resetAll` in command line
+
 
 ### PhpUnit
 * `composer phpunit`
