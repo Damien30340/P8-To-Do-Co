@@ -19,3 +19,6 @@ https://openclassrooms.com/projects/ameliorer-un-projet-existant-1
 
 ### PhpUnit
 * `composer phpunit`
+
+### Contributing
+Read more [here](https://github.com/Damien30340/P8-ToDo-Co/blob/master/contributing.md)
