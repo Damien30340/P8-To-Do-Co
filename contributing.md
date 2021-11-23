@@ -10,7 +10,7 @@ If the issues exist, just update, else create the issues with name corresponding
 
 ## Install the project
 
-Please read [Readme.md](https://github.com/Damien30340/P8-ToDo-Co/blob/master/Readme.md) Readme.md file in the project
+Please read [Readme.md](https://github.com/Damien30340/P8-ToDo-Co/blob/master/README.md) Readme.md file in the project
 
 ## Create a branch
 
