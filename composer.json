@@ -120,7 +120,7 @@
             "symfony console doctrine:fixtures:load -n"
         ],
         "phpstan": [
-            ".\\vendor\\bin\\phpstan analyse --level max src tests"
+            ".\\vendor\\bin\\phpstan analyse -l6 src tests"
         ],
         "phpunit": [
             ".\\vendor\\bin\\phpunit"
