@@ -100,24 +100,24 @@
         "resetAll": [
             "symfony console --env=test doctrine:database:drop --force --if-exists",
             "symfony console --env=test doctrine:database:create",
-            "symfony console --env=test doctrine:schema:create",
+            "symfony console --env=test doctrine:migration:migrate",
             "symfony console --env=test doctrine:fixtures:load -n",
-            "symfony console d:d:d --force --if-exists",
-            "symfony console d:d:c",
-            "symfony console d:s:c",
-            "symfony console d:f:l -n"
+            "symfony console doctrine:database:drop --force --if-exists",
+            "symfony console doctrine:database:create",
+            "symfony console doctrine:migration:migrate",
+            "symfony console doctrine:fixtures:load -n"
         ],
         "resetTest": [
             "symfony console --env=test doctrine:database:drop --force --if-exists",
             "symfony console --env=test doctrine:database:create",
-            "symfony console --env=test doctrine:schema:create",
+            "symfony console --env=test doctrine:migration:migrate",
             "symfony console --env=test doctrine:fixtures:load -n"
         ],
         "reset": [
-            "symfony console d:d:d --force --if-exists",
-            "symfony console d:d:c",
-            "symfony console d:s:c",
-            "symfony console d:f:l -n"
+            "symfony console doctrine:database:drop --force --if-exists",
+            "symfony console doctrine:database:create",
+            "symfony console doctrine:migration:migrate",
+            "symfony console doctrine:fixtures:load -n"
         ],
         "phpstan": [
             ".\\vendor\\bin\\phpstan analyse --level max src tests"
