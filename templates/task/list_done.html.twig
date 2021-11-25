@@ -14,7 +14,7 @@
                         </h4>
                         <h4><a href="{{ path('task_edit', {'id' : task.id }) }}">{{ task.title }}</a></h4>
                         <p>{{ task.content }}</p>
-                        <p>Autheur : {% if task.user is null %}anonymous{% else %}{{ task.user.username }}{% endif %}</p>
+                        <p>Auteur : {% if task.user is null %}anonymous{% else %}{{ task.user.username }}{% endif %}</p>
                     </div>
                     <div>
                         <form action="{{ path('task_delete', {'id' : task.id }) }}">

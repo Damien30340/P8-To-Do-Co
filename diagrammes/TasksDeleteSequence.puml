@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+User -> System: Delete Tasks Request
+
+    alt Succesfull case
+
+    System --> User: Succesfull Response
+    System --> BDD: Delete Task
+
+    else
+
+    System --> User: Unauthorize Response
+
+    end
+
+@enduml

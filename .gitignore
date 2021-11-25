@@ -15,8 +15,9 @@
 ###< symfony/phpunit-bridge ###
 
 ###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
+phpunit.xml.dist
+/.phpunit.result.cache
+/coverage
 ###< phpunit/phpunit ###
 
 ###> squizlabs/php_codesniffer ###
@@ -28,3 +29,8 @@
 /.php-cs-fixer.php
 /.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
+
+###> diagrammes ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< diagrammes ###

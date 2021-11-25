@@ -24,7 +24,7 @@ class ApplicationAvailabilityFunctionalTest extends WebTestCase
     public function urlProvider(): iterable
     {
         yield 'homepage' => ['/', 302];
-        yield 'admin_list_users' => ['/admin/users', 302];
+        yield 'admin_list_users' => ['/users/list', 302];
         yield 'user_create' => ['/users/create', 200];
         yield 'user_edit' => ['/users/1/edit', 302];
         yield 'tasks_list' => ['/tasks', 302];

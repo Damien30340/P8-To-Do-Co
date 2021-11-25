@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+User -> System: List User Request
+
+alt Authorization case
+
+System --> User: Succesfull Response
+
+else
+
+System --> User: Unauthorize Response
+end
+
+System --> User: List User Response
+
+@enduml
