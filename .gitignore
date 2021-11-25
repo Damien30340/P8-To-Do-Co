@@ -17,7 +17,7 @@
 ###> phpunit/phpunit ###
 phpunit.xml.dist
 /.phpunit.result.cache
-/coverage
+/coverage/
 ###< phpunit/phpunit ###
 
 ###> squizlabs/php_codesniffer ###
