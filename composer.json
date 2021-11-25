@@ -49,7 +49,6 @@
         "dama/doctrine-test-bundle": "^6.6.0",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
         "nunomaduro/phpinsights": "^2.0",
-        "phpmd/phpmd": "^2.10",
         "phpstan/phpstan-symfony": "^1.0",
         "phpunit/phpunit": "^9.5",
         "sebastian/phpcpd": "^6.0",
@@ -133,9 +132,6 @@
         ],
         "phpcpd": [
             ".\\vendor\\bin\\phpcpd src/"
-        ],
-        "phpmd": [
-            ".\\vendor\\bin\\phpmd src/ text .phpmd.xml"
         ]
     },
     "conflict": {

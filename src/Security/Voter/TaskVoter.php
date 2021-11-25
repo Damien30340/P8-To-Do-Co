@@ -24,6 +24,7 @@ class TaskVoter extends Voter
 
     /**
      * @param Task|null $subject
+     * @codeCoverageIgnore
      */
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
