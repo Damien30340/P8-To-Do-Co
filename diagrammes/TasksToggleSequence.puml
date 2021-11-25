@@ -1,0 +1,19 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+User -> System: Toggle Tasks Request
+
+    alt Succesfull case
+
+    System --> User: Succesfull Response
+    System --> BDD: Toggle Task
+
+    else
+
+    System --> User: Unauthorize Response
+
+    end
+
+@enduml

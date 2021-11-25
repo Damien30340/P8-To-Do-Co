@@ -17,7 +17,7 @@ class UserControllerTest extends WebTestCase
         $client = self::createClient();
         $client->loginUser($this->hydrateUser($client), self::MAIN_FIREWALL);
 
-        $client->request('GET', '/admin/users');
+        $client->request('GET', '/users/list');
         $this->assertSame(403, $client->getResponse()->getStatusCode());
     }
 
@@ -36,7 +36,7 @@ class UserControllerTest extends WebTestCase
         $client = self::createClient();
         $client->loginUser($this->hydrateAdmin($client), self::MAIN_FIREWALL);
 
-        $client->request('GET', '/admin/users');
+        $client->request('GET', '/users/list');
         $this->assertSame(200, $client->getResponse()->getStatusCode());
     }
 

@@ -1,0 +1,20 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+User -> System: CreateUser Request
+System --> User: CreateUserPage Response
+
+User -> System: CreateUser Request POST
+
+alt succesfull case
+
+System -> BDD: User Create
+System --> User: Succesfull Response
+
+else
+
+System --> User: Faillure Response
+end
+@enduml
