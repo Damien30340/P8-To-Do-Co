@@ -133,4 +133,14 @@ class TaskControllerTest extends WebTestCase
         $client->followRedirect();
         $this->assertRouteSame('task_list');
     }
+    
+        public function testTaskDone(): void
+    {
+        $client = self::createClient();
+        $client->loginUser(self::hydrateUser($client), self::MAIN_FIREWALL);
+
+        $client->request('GET', '/tasks/done');
+        $this->assertResponseStatusCodeSame(200);
+        $this->assertRouteSame('task_done');
+    }
 }
